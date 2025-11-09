@@ -69,10 +69,10 @@ public class CartServlet extends HttpServlet {
 
         if (success != null) {
             if ("true".equals(success)) {
-                req.setAttribute("successMessage", "Đặt hàng thành công! Cảm ơn bạn đã mua sắm.");
+                req.setAttribute("successMessage", "Order placed successfully! Thank you for your purchase.");
                 req.setAttribute("alertClass", "alert-success");
             } else if ("false".equals(success)) {
-                req.setAttribute("successMessage", "Số lượng vượt quá số lượng mặt hàng trong kho.");
+                req.setAttribute("successMessage", "The requested quantity exceeds the available stock.");
                 req.setAttribute("alertClass", "alert-danger");
             }
         }

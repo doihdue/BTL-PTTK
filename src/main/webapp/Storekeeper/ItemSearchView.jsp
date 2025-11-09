@@ -130,6 +130,22 @@
         </div>
 
         <div class="card-body">
+            <!-- Thông báo thành công -->
+            <c:if test="${param.success == 'true'}">
+                <div id="successAlert" class="alert alert-success text-center fw-bold" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    The product has been updated successfully!
+                </div>
+
+                <script>
+                    // Ẩn thông báo sau 3 giây
+                    setTimeout(() => {
+                        const alertBox = document.getElementById("successAlert");
+                        if (alertBox) alertBox.style.display = "none";
+                    }, 3000);
+                </script>
+            </c:if>
+
             <!-- Nút Back -->
             <a href="ProductServlet?action=management" class="back-link mb-3">
                 <i class="fas fa-arrow-left me-1"></i>Back

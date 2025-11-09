@@ -100,7 +100,7 @@ public class ProductServlet extends HttpServlet {
 
             Product product = new Product(id, name, price, stock, description);
             dao.saveProduct(product);
-            resp.sendRedirect("ProductServlet?action=search");
+            resp.sendRedirect("ProductServlet?action=search&success=true");
         }
     }
 }
