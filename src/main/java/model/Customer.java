@@ -7,6 +7,9 @@ public class Customer extends User {
     public Customer(int id) {
         setId(id);
     }
+    public Customer(){
+
+    }
 
     public String getCustomerType() { return customerType; }
     public void setCustomerType(String customerType) { this.customerType = customerType; }

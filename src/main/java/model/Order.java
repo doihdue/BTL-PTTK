@@ -10,6 +10,7 @@ public class Order {
     private double totalAmount;
     private List<OrderDetail> orderDetails;
     private Customer customer;
+    private Address address;
 
     public Order() {}
 
@@ -38,4 +39,7 @@ public class Order {
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
+
+    public Address getAddress() { return address; }
+    public void setAddress(Address address) { this.address = address; }
 }

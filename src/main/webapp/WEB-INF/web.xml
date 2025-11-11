@@ -36,6 +36,16 @@
         <url-pattern>/OrderServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddressServlet</servlet-name>
+        <servlet-class>servlet.AddressServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddressServlet</servlet-name>
+        <url-pattern>/AddressServlet</url-pattern>
+    </servlet-mapping>
+
+
 
     <!-- Cấu hình welcome page -->
     <welcome-file-list>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -291,29 +291,83 @@
                     </div>
 
                     <!-- Thông tin khách hàng và Tổng tiền (Bên phải) -->
+                    <!-- Thông tin khách hàng và Tổng tiền (Bên phải) -->
                     <div class="right-panel">
                         <div class="customer-info-and-total">
-                            <h5><i class="fas fa-user-circle me-2"></i>Customer Information</h5>
-                            <p><strong>Full Name:</strong> ${user.name}</p>
-                            <p><strong>Address:</strong> ${user.address}</p>
-                            <p><strong>Phone:</strong> ${user.phone}</p>
+                            <h5><i class="fas fa-user-circle me-2"></i>Delivery Address</h5>
+
+                            <!-- Dropdown chọn địa chỉ -->
+                            <label for="addressSelect" class="form-label">Select Address:</label>
+                            <form id="addressForm" action="AddressServlet" method="post">
+                                <input type="hidden" name="action" value="setDefault">
+                                <select id="addressSelect" name="addressId" class="form-select mb-3" onchange="document.getElementById('addressForm').submit()">
+                                    <c:forEach var="a" items="${addresses}">
+                                        <option value="${a.id}" ${a.defaultAddress ? 'selected' : ''}>
+                                                ${a.fullName} - ${a.phone} (${a.address})
+                                            <c:if test="${a.defaultAddress}">(Default)</c:if>
+                                        </option>
+
+                                    </c:forEach>
+                                </select>
+                            </form>
+
+
+                            <!-- Nút mở form thêm địa chỉ -->
+                            <button type="button" class="btn btn-primary w-100 mb-3" onclick="toggleAddressForm()">
+                                <i class="fas fa-plus"></i> Add New Address
+                            </button>
+
+                            <!-- Form ẩn để thêm địa chỉ mới -->
+                            <form id="newAddressForm" action="AddressServlet" method="post" style="display:none;">
+                                <div class="mb-2">
+                                    <input type="text" name="fullName" class="form-control" placeholder="Full name" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="phone" class="form-control" placeholder="Phone number" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="address" class="form-control" placeholder="Address" required>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input type="checkbox" name="isDefault" class="form-check-input" id="defaultCheck">
+                                    <label class="form-check-label" for="defaultCheck">Set as default</label>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Save Address</button>
+                            </form>
 
                             <hr class="my-4">
+
+                            <!-- Hiển thị thông tin địa chỉ đang chọn -->
+                            <c:if test="${not empty addresses}">
+                                <c:set var="selected" value="${addresses[0]}" />
+                                <p><strong>Full Name:</strong> ${selected.fullName}</p>
+                                <p><strong>Phone:</strong> ${selected.phone}</p>
+                                <p><strong>Address:</strong> ${selected.address}</p>
+                            </c:if>
 
                             <div class="total-amount-box">
                                 <span>Total Amount:</span>
                                 <h4>
-                                    <fmt:formatNumber value="${cart.totalPrice}" type="number" groupingUsed="true" maxFractionDigits="0" /> VNĐ
+                                    <fmt:formatNumber value="${cart.totalPrice}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ
                                 </h4>
                             </div>
 
                             <form action="OrderServlet" method="post" class="mt-4">
+                                <input type="hidden" name="addressId" value="${selected.id}">
                                 <button type="submit" class="btn btn-checkout w-100">
                                     <i class="fas fa-shopping-cart me-2"></i>Checkout
                                 </button>
                             </form>
                         </div>
                     </div>
+
+                    <script>
+                        function toggleAddressForm() {
+                            const form = document.getElementById("newAddressForm");
+                            form.style.display = form.style.display === "none" ? "block" : "none";
+                        }
+                    </script>
+
                 </div>
             </div>
 

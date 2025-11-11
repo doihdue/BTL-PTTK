@@ -16,7 +16,7 @@ public class OrderDAO extends DAO {
     public int saveOrder(Order order) {
         int orderId = -1;
 
-        String sqlOrder = "INSERT INTO tblorder(orderDate, status, customer_id) VALUES (?, ?, ?)";
+        String sqlOrder = "INSERT INTO tblorder(orderDate, status, customer_id, addressId) VALUES (?, ?, ?, ?)";
         String sqlDetail = "INSERT INTO tblorderdetail(order_id, product_id, quantity, unitPrice) VALUES (?, ?, ?, ?)";
         String sqlUpdateStock = "UPDATE tblproduct SET stockQuantity = stockQuantity - ? WHERE id = ?";
 
@@ -28,6 +28,8 @@ public class OrderDAO extends DAO {
                 psOrder.setDate(1, new java.sql.Date(order.getOrderDate().getTime()));
                 psOrder.setString(2, order.getStatus());
                 psOrder.setInt(3, order.getCustomer().getId());
+                psOrder.setInt(4, order.getAddress().getId()); // 🆕 địa chỉ giao hàng
+
                 psOrder.executeUpdate();
 
                 ResultSet rs = psOrder.getGeneratedKeys();
@@ -59,9 +61,8 @@ public class OrderDAO extends DAO {
                 psUpdateStock.executeBatch();
             }
 
-            // --- 3. Commit nếu không lỗi ---
             con.commit();
-            System.out.println("✅ Đơn hàng #" + orderId + " lưu thành công và đã cập nhật tồn kho.");
+            System.out.println("✅ Đơn hàng #" + orderId + " lưu thành công, đã cập nhật tồn kho và địa chỉ giao hàng.");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,5 +82,6 @@ public class OrderDAO extends DAO {
 
         return orderId;
     }
+
 
 }

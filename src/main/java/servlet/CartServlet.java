@@ -1,7 +1,9 @@
 package servlet;
 
+import dao.AddressDAO;
 import dao.CartDAO;
 import dao.ProductDAO;
+import model.Address;
 import model.Cart;
 import model.Product;
 import model.User;
@@ -9,6 +11,7 @@ import model.User;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 
 public class CartServlet extends HttpServlet {
     private CartDAO cartDAO;
@@ -22,6 +25,9 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
+
         String action = req.getParameter("action");
         User user = (User) req.getSession().getAttribute("user");
         if (user == null) {
@@ -52,6 +58,9 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
+
         String action = req.getParameter("action");
         if (action == null) action = "view";
 
@@ -64,6 +73,10 @@ public class CartServlet extends HttpServlet {
         Cart cart = cartDAO.getCartByCustomerId(customerId);
         req.setAttribute("cart", cart);
         req.setAttribute("user", user);
+        AddressDAO addressDAO = new AddressDAO();
+        List<Address> addresses = addressDAO.getAddressesByCustomerId(customerId);
+        req.setAttribute("addresses", addresses);
+
 
         String success = req.getParameter("success");
 
@@ -76,6 +89,9 @@ public class CartServlet extends HttpServlet {
                 req.setAttribute("alertClass", "alert-danger");
             }
         }
+
+        System.out.println("Addresses loaded: " + addresses.size());
+        System.out.println("Cart items: " + (cart != null ? cart.getItems().size() : 0));
 
         req.getRequestDispatcher("/Customer/CartView.jsp").forward(req, resp);
     }

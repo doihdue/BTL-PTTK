@@ -33,6 +33,8 @@ public class OrderServlet extends HttpServlet {
         }
 
         int customerId = user.getId();
+        int addressId = Integer.parseInt(req.getParameter("addressId"));
+
 
         try {
             // Lấy giỏ hàng của khách
@@ -73,6 +75,7 @@ public class OrderServlet extends HttpServlet {
             order.setCustomer(new Customer(customerId));
             order.setOrderDate(new Date());
             order.setStatus("Đang xử lý");
+            order.setAddress(new Address(addressId));
             order.setOrderDetails(details);
 
             // Gọi DAO để lưu
