@@ -58,7 +58,7 @@
         }
 
         .customer-info-and-total {
-            margin-top: 25px; /* Điều chỉnh margin */
+            /*margin-top: 10px; !* Điều chỉnh margin *!*/
             margin-bottom: 25px;
             background-color: #e9f2ff; /* Nền màu xanh nhạt cho thông tin khách hàng */
             border-radius: 10px;
@@ -91,7 +91,7 @@
         }
 
         .table-container {
-            max-height: 350px; /* Điều chỉnh chiều cao cho phù hợp */
+            max-height: 450px; /* Điều chỉnh chiều cao cho phù hợp */
             overflow-y: auto;
             border: 1px solid #e0e0e0; /* Viền bảng tinh tế hơn */
             border-radius: 8px;
